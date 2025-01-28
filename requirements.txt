@@ -1,0 +1,4 @@
+requests
+elasticsearch
+elasticsearch_dsl
+nltk
