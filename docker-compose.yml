@@ -1,0 +1,27 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    networks:
+      - rag-network
+
+  rag-app:
+    build: .
+    container_name: rag_app
+    depends_on:
+      - elasticsearch
+    environment:
+      - RAPIDAPI_KEY=${RAPIDAPI_KEY}
+    stdin_open: true   # Keep standard input open for interactive input
+    tty: true          # Allocate a pseudo-TTY for terminal interaction
+    networks:
+      - rag-network
+
+networks:
+  rag-network:
+    driver: bridge

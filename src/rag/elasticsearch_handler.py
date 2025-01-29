@@ -5,7 +5,7 @@ import time
 logging.basicConfig(level=logging.INFO)
 
 class ElasticsearchHandler:
-    def __init__(self, host="http://localhost:9200"):
+    def __init__(self, host="http://elasticsearch:9200"):
         self.es = Elasticsearch(hosts=[host])
     
     def create_index(self, index_name: str, mappings: dict):

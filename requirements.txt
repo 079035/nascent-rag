@@ -1,4 +1,5 @@
-requests
-elasticsearch
-elasticsearch_dsl
-nltk
+requests==2.32.3
+elasticsearch==8.17.1
+elasticsearch_dsl==8.17.1
+nltk==3.9.1
+sentence-transformers==3.4.0
