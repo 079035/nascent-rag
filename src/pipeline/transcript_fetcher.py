@@ -33,9 +33,9 @@ def fetch_transcripts(tickers: List[str], num_transcripts: int = 20) -> dict:
             response.raise_for_status()
             for i in range(num_transcripts):
                 transcript_ids.append(response.json()["data"][i]["id"])  # Transcript ID for the ticker
-            logging.info(f"Fetched transcript for {ticker}")
+            logging.info(f"Fetched transcripts for {ticker}")
         except Exception as e:
-            logging.error(f"Failed to fetch transcript for {ticker}: {e}")
+            logging.error(f"Failed to fetch transcripts for {ticker}: {e}")
         try:
             for transcript_id in transcript_ids:
                 url = f"{BASE_URL}/transcripts/v2/get-details"
@@ -43,19 +43,12 @@ def fetch_transcripts(tickers: List[str], num_transcripts: int = 20) -> dict:
                 response = requests.get(url, headers=HEADERS, params=params)
                 response.raise_for_status()
                 transcripts[ticker].append(response.json()["data"])  # Transcript details for the ticker
+                logging.info(f"Fetched transcript {transcript_id}")
+            logging.info(f"Fetched transcript details for {ticker}")
         except Exception as e:
             logging.error(f"Failed to fetch transcript details for {ticker}: {e}")
-        # break
 
     return transcripts
 
 if __name__ == "__main__":
-    tickers = ["NVDA", "TSLA", "AMZN", "XOM", "JNJ", "DE"]
-    transcripts = fetch_transcripts(tickers)
-    for ticker, transcript_list in transcripts.items():
-        print(f"Transcripts for {ticker}:")
-        for transcript in transcript_list:
-            print(f"Title: {transcript['attributes']['title']}")
-            print(f"Published Date: {transcript['attributes']['publishOn']}")
-            print(f"URL: {transcript['links']['canonical']}")
-            print()
+    pass

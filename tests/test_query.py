@@ -49,7 +49,7 @@ class TestQueryService(unittest.TestCase):
         time.sleep(1)  # Allow time for the documents to index
 
     def test_search_documents(self):
-        results = self.service.search_documents("NVDA", "record earnings")
+        results = self.service.search_documents_by_keywords("NVDA", "record earnings")
         self.assertGreater(len(results), 0)
         self.assertEqual(results[0]["ticker"], "NVDA")
         self.assertIn("record earnings", results[0]["excerpt"].lower())

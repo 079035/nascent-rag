@@ -37,7 +37,7 @@ def get_single_article(article_id: str) -> dict:
     
     return article
 
-def fetch_articles(tickers: List[str], num_articles: int = 20) -> dict:
+def fetch_news(tickers: List[str], num_articles: int = 20) -> dict:
     """
     Fetch recent news articles for a list of stock tickers.
     
@@ -57,27 +57,19 @@ def fetch_articles(tickers: List[str], num_articles: int = 20) -> dict:
             response = requests.get(url, headers=HEADERS, params=params)
             response.raise_for_status()
             article_list = response.json()  # JSON response for the ticker
-            logging.info(f"Fetched {num_articles} latest articles")
+            logging.info(f"Fetched {num_articles} latest articles for ticker {ticker}")
         except Exception as e:
-            logging.error(f"Failed to fetch latest articles: {e}")
+            logging.error(f"Failed to fetch latest articles for ticker {ticker}: {e}")
         try:
             for article_idx in range(len(article_list["data"])):
                 article_id = article_list["data"][article_idx]["id"]
                 articles[ticker].append(get_single_article(article_id))
                 sleep(5)
+            logging.info(f"Fetched article details for ticker {ticker}")
         except Exception as e:
-            logging.error(f"Failed to fetch article details: {e}")
-        # break
+            logging.error(f"Failed to fetch article details for ticker {ticker}: {e}")
 
     return articles
 
 if __name__ == "__main__":
-    tickers = ["NVDA", "TSLA", "AMZN", "XOM", "JNJ", "DE"]
-    articles = fetch_articles(tickers)
-    for ticker, article_list in articles.items():
-        print(f"Ticker: {ticker}")
-        for article in article_list:
-            print(f"Title: {article['attributes']['title']}")
-            print(f"Published Date: {article['attributes']['publishOn']}")
-            print(f"URL: {article['links']['canonical']}")
-            print()
+    pass

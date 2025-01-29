@@ -29,27 +29,15 @@ class ElasticsearchHandler:
         """
         Perform a search query on an index.
         """
-        logging.info(f"Search query: {query}")
         response = self.es.search(index=index_name, body=query)
-        logging.info(f"Search response: {response}")
         return response['hits']['hits']
 
-if __name__ == "__main__":
-    handler = ElasticsearchHandler()
+    def delete_index(self, index_name: str):
+        """
+        Delete an Elasticsearch index.
+        """
+        self.es.options(ignore_status=[400,404]).indices.delete(index=index_name)
+        logging.info(f"Deleted index: {index_name}")
 
-    # Create the index
-    handler.create_index(
-        index_name="documents",
-        mappings={
-            "mappings": {
-                "properties": {
-                    "ticker": {"type": "keyword"},
-                    "title": {"type": "text"},
-                    "content": {"type": "text"},
-                    "type": {"type": "keyword"},
-                    "published_date": {"type": "text"},
-                    "url": {"type": "keyword"},
-                }
-            }
-        }
-    )
+if __name__ == "__main__":
+    pass
