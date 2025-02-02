@@ -28,8 +28,7 @@ export RAPIDAPI_KEY=your_actual_rapidapi_key_here
     ```
 2. Build and start the application using the provided script:
     ```bash
-    chmod +x build.sh
-    ./build.sh
+    sh build.sh
     ```
 3. Verify that the containers are running:
     ```bash
